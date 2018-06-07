@@ -1,8 +1,5 @@
 package br.com.etecmam.eleicoes_webservice.servicos;
 
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -11,6 +8,8 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.imageio.ImageIO;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -39,8 +38,14 @@ public class ServicoCandidato {
 		Response response = null;
 		
 		try {
-
-			BufferedImage img = ImageIO.read(new File(System.getProperty("user.dir") + "\\resources\\" + foto ) );
+			
+						
+//			BufferedImage img = ImageIO.read(new File(System.getProperty("user.dir") + "\\resources\\" + foto ) );
+//			BufferedImage img = ImageIO.read(new File(System.getProperty("user.dir").replace("\\", "/") + "/resources/" + foto) );
+			BufferedImage img = ImageIO.read(new File("resources/" + foto) );
+						
+			System.out.println("img carregada: " + img.toString() );
+			
 			
 			response = Response.ok()					
 					.type("image/png")
@@ -48,6 +53,7 @@ public class ServicoCandidato {
 					.build();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new InternalServerErrorException();
 		}
 				
